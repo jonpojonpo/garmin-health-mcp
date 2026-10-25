@@ -1,0 +1,28 @@
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  mcpb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync && uv run pytest -q
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check the manifest version matches the tag
+        run: test "v$(jq -r .version manifest.json)" = "$GITHUB_REF_NAME"
+      - run: npx -y @anthropic-ai/mcpb@2.1.2 validate manifest.json
+      - run: npx -y @anthropic-ai/mcpb@2.1.2 pack . garmin-health-mcp.mcpb
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: garmin-health-mcp.mcpb
+          generate_release_notes: true
+          body: |
+            Download `garmin-health-mcp.mcpb` below and open it in Claude Desktop. It asks for your Garmin
+            Personal API key and stores it in your OS keychain. Requires `uv`. See the README for Claude Code
+            and other MCP clients.
