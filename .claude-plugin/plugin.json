@@ -1,10 +1,26 @@
 {
   "name": "garmin-health",
-  "version": "0.1.0",
-  "description": "Garmin sleep, HRV, Body Battery, stress, activities and training load via Garmin's official Personal API, with history, charts and a calibrating readiness estimate.",
-  "author": { "name": "jonpo" },
+  "version": "0.2.0",
+  "description": "Garmin sleep, HRV, Body Battery, stress, activities and training load via Garmin's official Personal API, with history, charts, a calibrating readiness estimate, and coaching skills.",
+  "author": {
+    "name": "jonpo"
+  },
   "homepage": "https://github.com/jonpojonpo/garmin-health-mcp",
   "repository": "https://github.com/jonpojonpo/garmin-health-mcp",
   "license": "MIT",
-  "keywords": ["garmin", "health", "hrv", "training"]
+  "keywords": [
+    "garmin",
+    "health",
+    "hrv",
+    "training"
+  ],
+  "displayName": "Garmin Health",
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "Garmin Personal API key",
+      "description": "Starts with GCDC_. Create it in Garmin Connect settings (Personal API). Leave empty to use GARMIN_API_KEY or ~/.config/garmin/connect-personal-api-key.",
+      "sensitive": true
+    }
+  }
 }

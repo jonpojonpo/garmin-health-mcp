@@ -1,6 +1,9 @@
 {
   "name": "garmin-health-mcp",
-  "owner": { "name": "jonpo" },
+  "description": "Garmin Health: Garmin Personal API MCP server with recovery and training-load models, charts, dashboards and coaching skills.",
+  "owner": {
+    "name": "jonpo"
+  },
   "plugins": [
     {
       "name": "garmin-health",

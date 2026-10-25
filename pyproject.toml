@@ -1,6 +1,6 @@
 [project]
 name = "garmin-health-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "MCP server for Garmin's Personal API: sleep, HRV, Body Battery, stress, training load, readiness, charts and dashboards"
 readme = "README.md"
 license = "MIT"

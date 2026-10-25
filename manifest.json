@@ -2,7 +2,7 @@
   "manifest_version": "0.4",
   "name": "garmin-health-mcp",
   "display_name": "Garmin Health (Personal API)",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Your Garmin sleep, HRV, Body Battery, stress, activities and training load via Garmin's official Personal API, with history, charts, dashboards and a readiness estimate.",
   "long_description": "Unofficial MCP server for Garmin's Personal API (launched 21 Oct 2026). Read-only. Keeps a local history so it can chart any daily metric, model Garmin-style acute/chronic load, fitness/fatigue/form, recovery time and a Training-Readiness-like estimate that calibrates to the scores your watch shows. Your data goes only between your computer and Garmin.",
   "author": {

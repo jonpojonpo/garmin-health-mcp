@@ -37,12 +37,29 @@ and open it. Claude Desktop asks for your API key and stores it in the OS keycha
 /plugin install garmin-health@garmin-health-mcp
 ```
 
-Provide the key either as `GARMIN_API_KEY` in your environment or in the file Garmin's own client uses:
+Claude Code asks for your API key when the plugin is enabled and keeps it in your system keychain. You can
+also leave it empty and provide the key as `GARMIN_API_KEY`, or in the file Garmin's own client uses:
 
 ```bash
 mkdir -p ~/.config/garmin && printf '%s' 'GCDC_...' > ~/.config/garmin/connect-personal-api-key
 chmod 600 ~/.config/garmin/connect-personal-api-key
 ```
+
+The plugin also installs three skills (see [Skills](#skills)).
+
+### OpenAI Codex CLI
+
+```bash
+codex mcp add garmin-health -- uvx --from git+https://github.com/jonpojonpo/garmin-health-mcp garmin-health-mcp
+```
+
+Put the key in `~/.config/garmin/connect-personal-api-key` as above, or add `--env GARMIN_API_KEY=GCDC_...`
+before the `--` (that stores it in plain text in `~/.codex/config.toml`). The first start downloads the
+dependencies; if Codex reports a startup timeout, add `startup_timeout_sec = 60` under
+`[mcp_servers.garmin-health]` in `~/.codex/config.toml`.
+
+ChatGPT (web and app) only connects to MCP servers over the internet, so it needs a hosted or tunnelled
+copy of the server; that isn't packaged yet.
 
 ### Any MCP client
 
@@ -79,6 +96,17 @@ fetched. Call `sync(days=365)` for a longer history.
 | `sync`, `api_get` | Manual backfill; raw access to other Personal API endpoints |
 
 Prompts: **Morning briefing**, **Weekly review**, **Build a dashboard**.
+
+## Skills
+
+Tools fetch the data; skills tell Claude what to do with it. They ship with the Claude Code plugin, and the
+folders in [`skills/`](skills/) can also be added to Claude Desktop or claude.ai as custom skills.
+
+| Skill | Use it for |
+|---|---|
+| `garmin-coach` | "How recovered am I? Should I train today?" Reads the numbers against your own baseline, logs Garmin's readiness when you mention it, and ends with one concrete session |
+| `garmin-dashboard` | "Make me a dashboard." The recipe for an interactive page from `dashboard_data` |
+| `training-week` | "Plan my week." Sets a load target from your chronic load, sizes sessions from your own history, and keeps the load ratio in Garmin's 0.8–1.5 band |
 
 ## Models and how far to trust them
 
