@@ -1,0 +1,186 @@
+{
+  "manifest_version": "0.4",
+  "name": "garmin-health-mcp",
+  "display_name": "Garmin Health (Personal API)",
+  "version": "0.1.0",
+  "description": "Your Garmin sleep, HRV, Body Battery, stress, activities and training load via Garmin's official Personal API, with history, charts, dashboards and a readiness estimate.",
+  "long_description": "Unofficial MCP server for Garmin's Personal API (launched 21 Oct 2026). Read-only. Keeps a local history so it can chart any daily metric, model Garmin-style acute/chronic load, fitness/fatigue/form, recovery time and a Training-Readiness-like estimate that calibrates to the scores your watch shows. Your data goes only between your computer and Garmin.",
+  "author": {
+    "name": "jonpo",
+    "url": "https://github.com/jonpojonpo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonpojonpo/garmin-health-mcp.git"
+  },
+  "homepage": "https://github.com/jonpojonpo/garmin-health-mcp",
+  "documentation": "https://github.com/jonpojonpo/garmin-health-mcp#readme",
+  "support": "https://github.com/jonpojonpo/garmin-health-mcp/issues",
+  "icon": "icon.png",
+  "license": "MIT",
+  "keywords": [
+    "garmin",
+    "health",
+    "hrv",
+    "sleep",
+    "training-load",
+    "fitness"
+  ],
+  "privacy_policies": [
+    "https://github.com/jonpojonpo/garmin-health-mcp#privacy"
+  ],
+  "server": {
+    "type": "uv",
+    "entry_point": "mcpb_entry.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "${__dirname}",
+        "--quiet",
+        "mcpb_entry.py"
+      ],
+      "env": {
+        "GARMIN_API_KEY": "${user_config.api_key}",
+        "GARMIN_HEALTH_DATA_DIR": "${user_config.data_dir}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "morning_check",
+      "description": "Recovery snapshot: last night's sleep, HRV vs baseline, resting HR vs its 7-day mean,."
+    },
+    {
+      "name": "log_garmin_readiness",
+      "description": "Record the Training Readiness score Garmin shows (0-100), stored locally, so the."
+    },
+    {
+      "name": "readiness_history",
+      "description": "Per-morning readiness estimate (at wake) next to its main inputs and any Garmin."
+    },
+    {
+      "name": "training_load",
+      "description": "Training load: daily load, Garmin-style acute load and acute:chronic ratio (Garmin's."
+    },
+    {
+      "name": "load_focus",
+      "description": "Approximate Garmin Load Focus: training load split into low aerobic, high aerobic and."
+    },
+    {
+      "name": "activities",
+      "description": "Activities, newest first: type, duration, distance, Garmin training load,."
+    },
+    {
+      "name": "activity",
+      "description": "Full Garmin detail for one activity (Garmin's summary DTO)."
+    },
+    {
+      "name": "power_profile",
+      "description": "Cycling power: FTP (set with set_athlete, otherwise estimated as 95% of best 20-min."
+    },
+    {
+      "name": "set_athlete",
+      "description": "Store FTP and body weight locally (used for power zones and W/kg)."
+    },
+    {
+      "name": "daily",
+      "description": "Everything known per day: sleep, HRV, resting HR, Body Battery, stress, calories,."
+    },
+    {
+      "name": "calories",
+      "description": "Daily calories burned: active, resting, total, and from recorded activities, with averages."
+    },
+    {
+      "name": "weekly_report",
+      "description": "Week-by-week (Monday start): averages of sleep score and hours, HRV, resting HR, stress,."
+    },
+    {
+      "name": "list_metrics",
+      "description": "Daily metrics available to timeseries, chart and dashboard_data."
+    },
+    {
+      "name": "timeseries",
+      "description": "Aligned daily series for chosen metrics (see list_metrics) with an optional rolling."
+    },
+    {
+      "name": "chart",
+      "description": "PNG chart of up to 6 daily metrics as stacked panels on a shared date axis: points or."
+    },
+    {
+      "name": "dashboard_data",
+      "description": "Compact JSON bundle for building a dashboard (e.g."
+    },
+    {
+      "name": "hrv_night",
+      "description": "One night's HRV in detail, including the 5-minute readings."
+    },
+    {
+      "name": "intraday",
+      "description": "Intraday curve for one day."
+    },
+    {
+      "name": "fitness_profile",
+      "description": "Garmin fitness age (with the changes that would lower it) and heart-rate zones."
+    },
+    {
+      "name": "sync",
+      "description": "Refresh the local history for the last `days` days."
+    },
+    {
+      "name": "api_get",
+      "description": "Raw GET against the Personal API for data without a tool, e.g."
+    }
+  ],
+  "prompts": [
+    {
+      "name": "morning_briefing",
+      "description": "How recovered am I and what should today's training look like?",
+      "arguments": [],
+      "text": "Call morning_check. Give me a short morning briefing: the readiness estimate and the one or two factors driving it, how last night's sleep and HRV compare with my baseline, recovery hours left, and where my training load sits. End with a concrete suggestion for today's training (type, duration, intensity) that fits. If you know my Garmin readiness score, log it first."
+    },
+    {
+      "name": "weekly_review",
+      "description": "Review the last few weeks of recovery and training.",
+      "arguments": [
+        "weeks"
+      ],
+      "text": "Call weekly_report(weeks=${arguments.weeks}) and training_load(days=42). Review my last ${arguments.weeks} weeks: training volume and load trend, fitness vs fatigue, sleep/HRV/resting-HR trends, and anything that looks like accumulating fatigue or a good adaptation. Finish with two or three specific recommendations for next week."
+    },
+    {
+      "name": "build_dashboard",
+      "description": "Make an interactive health and training dashboard from my Garmin data.",
+      "arguments": [
+        "days"
+      ],
+      "text": "Call dashboard_data(days=${arguments.days}) and build a single-page interactive dashboard from it (an HTML artifact if you can publish one). Include: a header with today's readiness estimate, sleep, HRV, resting HR, Body Battery and recovery hours; HRV with its balanced band and resting HR over time; sleep score; training load with acute vs chronic and the 0.8-1.5 optimal ratio band; fitness/fatigue/form; weekly rollups; load focus; and recent activities. Embed the JSON as data, label the server's estimates as estimates, and make it work in light and dark mode and on a phone."
+    }
+  ],
+  "user_config": {
+    "api_key": {
+      "type": "string",
+      "title": "Garmin Personal API key",
+      "description": "Starts with GCDC_. Create it in Garmin Connect settings (Personal API). Stored in your OS keychain.",
+      "sensitive": true,
+      "required": true
+    },
+    "data_dir": {
+      "type": "directory",
+      "title": "Data folder",
+      "description": "Where the local history and access token are kept.",
+      "default": "${HOME}/.garmin-health-mcp",
+      "required": false
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "python": ">=3.11"
+    }
+  }
+}

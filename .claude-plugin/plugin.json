@@ -1,0 +1,10 @@
+{
+  "name": "garmin-health",
+  "version": "0.1.0",
+  "description": "Garmin sleep, HRV, Body Battery, stress, activities and training load via Garmin's official Personal API, with history, charts and a calibrating readiness estimate.",
+  "author": { "name": "jonpo" },
+  "homepage": "https://github.com/jonpojonpo/garmin-health-mcp",
+  "repository": "https://github.com/jonpojonpo/garmin-health-mcp",
+  "license": "MIT",
+  "keywords": ["garmin", "health", "hrv", "training"]
+}

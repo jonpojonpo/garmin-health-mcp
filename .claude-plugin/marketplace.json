@@ -1,0 +1,11 @@
+{
+  "name": "garmin-health-mcp",
+  "owner": { "name": "jonpo" },
+  "plugins": [
+    {
+      "name": "garmin-health",
+      "source": "./",
+      "description": "Garmin Personal API MCP server: recovery, training load, charts and dashboards."
+    }
+  ]
+}

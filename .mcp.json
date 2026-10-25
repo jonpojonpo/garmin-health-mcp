@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "garmin-health": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/jonpojonpo/garmin-health-mcp", "garmin-health-mcp"],
+      "env": { "GARMIN_API_KEY": "${GARMIN_API_KEY:-}" }
+    }
+  }
+}
