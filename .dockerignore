@@ -1,0 +1,6 @@
+.venv
+.git
+dist
+*.mcpb
+.pytest_cache
+.ruff_cache
