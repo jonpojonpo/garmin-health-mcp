@@ -107,6 +107,15 @@ tool. The short-lived access token and the history database live in `~/.garmin-h
 `GARMIN_HEALTH_DATA_DIR`). Delete that folder to remove everything. Whatever your MCP client does with tool
 results (for example, sending them to a model) follows that client's own privacy terms.
 
+## Other Personal API servers
+
+Garmin's Personal API is new and several community servers appeared within days. If you only want the raw
+endpoints, [Mason-Levyy/garmin-personal-mcp](https://github.com/Mason-Levyy/garmin-personal-mcp) wraps all of
+them one-to-one; [braydenabo/garmin-mcp](https://github.com/braydenabo/garmin-mcp) keeps a local archive with
+trends and charts; [zigmund/garmin-papi-mcp](https://github.com/zigmund/garmin-papi-mcp) is a remote server with
+OAuth for claude.ai and ChatGPT. This project focuses on the layer on top: training load, recovery, a calibrated
+readiness estimate, and a one-click Claude Desktop install.
+
 ## Development
 
 ```bash
